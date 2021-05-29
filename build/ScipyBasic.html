@@ -1,0 +1,1598 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>An overview of SciPy &mdash; Python Tutorial  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"equationNumbers": {"autoNumber": "AMS", "useLabelIds": true}}, "tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="An Overview of SymPy" href="SympyBasic.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Python Tutorial
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="PythonBasic.html">An overview of Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="SympyBasic.html">An Overview of SymPy</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">An overview of SciPy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#SciPy---Integration">SciPy - Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Integrating-Functions-is-a-function-object.">Integrating Functions is a function object.</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#quad---General-purpose-integration"><code class="docutils literal notranslate"><span class="pre">quad</span></code> - General purpose integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dblquad---General-purpose-Double-Integration"><code class="docutils literal notranslate"><span class="pre">dblquad</span></code> - General purpose Double Integration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Example">Example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#tplquad---General-purpose-Triple-Integration"><code class="docutils literal notranslate"><span class="pre">tplquad</span></code> - General purpose Triple Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Volume-of-a-unit-sphere">Volume of a unit sphere</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Gaussian-Quadrature">Gaussian Quadrature</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#fixed_quad---Gaussian-quadrature"><code class="docutils literal notranslate"><span class="pre">fixed_quad</span></code> - Gaussian quadrature</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#quadrature---Gaussian-quadrature"><code class="docutils literal notranslate"><span class="pre">quadrature</span></code> - Gaussian quadrature</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Integration-using-sample">Integration using sample</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#trapezoid--Trapezoidal-rule"><code class="docutils literal notranslate"><span class="pre">trapezoid</span></code>- Trapezoidal rule</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#simpson---Simpson-rule"><code class="docutils literal notranslate"><span class="pre">simpson</span></code> - Simpson rule</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Solving-Ordinary-Differential-Equation">Solving Ordinary Differential Equation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#scipy.integrate.odeint">scipy.integrate.odeint</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Example---Oscillation-of-a-pendulum">Example - Oscillation of a pendulum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#scipy.integrate.solve_ivp">scipy.integrate.solve_ivp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#Example---Radioactive-Decay">Example - Radioactive Decay</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Python Tutorial</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>An overview of SciPy</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/ScipyBasic.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="An-overview-of-SciPy">
+<h1>An overview of SciPy<a class="headerlink" href="#An-overview-of-SciPy" title="Permalink to this headline">¶</a></h1>
+<p>SciPy is a free and open-source Python library used for scientific computation. SciPy contains modules for optimization, linear algebra, integration, interpolation, special functions, FFT, signal and image processing, ODE solvers and other tasks common in science and engineering <a class="reference external" href="https://en.wikipedia.org/wiki/SciPy">Wikipedia</a>. Out of many functionalities, those which are the most relevant to the CBCS course curriculum for Physics will be discussed here. Scipy doumentation can be acessed
+through <a class="reference external" href="https://docs.scipy.org">https://docs.scipy.org</a>.</p>
+<div class="section" id="SciPy---Integration">
+<h2>SciPy - Integration<a class="headerlink" href="#SciPy---Integration" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">scipy.integrate</span></code> sub-package provides several integration techniques including an ordinary differential equation integrator. An overview of the module is provided by the help command:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 80%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quad</span></code></p></td>
+<td><p>General purpose integration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">dblquad</span></code></p></td>
+<td><p>General purpose double integration.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">tplquad</span></code></p></td>
+<td><p>General purpose triple integration.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">fixed_quad</span></code></p></td>
+<td><p>Integrate func(x) using Gaussian quadrature of order n.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quadrature</span></code></p></td>
+<td><p>Integrate with given tolerance using Gaussian quadrature.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">romberg</span></code></p></td>
+<td><p>Integrate func using Romberg integration.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="Integrating-Functions-is-a-function-object.">
+<h3>Integrating Functions is a function object.<a class="headerlink" href="#Integrating-Functions-is-a-function-object." title="Permalink to this headline">¶</a></h3>
+<div class="section" id="quad---General-purpose-integration">
+<h4><code class="docutils literal notranslate"><span class="pre">quad</span></code> - General purpose integration<a class="headerlink" href="#quad---General-purpose-integration" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.quad(func, a, b, args(), ...)
+</pre></div>
+</div>
+<p><a class="reference external" href="(https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quad.html#scipy.integrate.quad)">Source</a></p>
+<p>Integrate <code class="docutils literal notranslate"><span class="pre">func</span></code> from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code> and compute the value of the definite integral.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>, any Python function,</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> are lower and upper limit of integration</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args()</span></code> are list of arguments and it is optional.</p></li>
+</ul>
+<p>Consider the integral</p>
+<p><span class="math">\begin{equation}
+\int_{0}^{3} \cos^2(e^x)dx
+\end{equation}</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>  <span class="c1"># integrand</span>
+<span class="n">a</span>    <span class="o">=</span> <span class="mi">0</span>                               <span class="c1"># lower limit</span>
+<span class="n">b</span>    <span class="o">=</span> <span class="mi">3</span>                               <span class="c1"># upper limit</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+<span class="c1"># result is a tuple whose first element is the value of the integral</span>
+<span class="c1"># and the second element is the error</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1.296467785724373, 1.3977971853986262e-09)
+</pre></div></div>
+</div>
+<p>The result is a tuple whose first element is the <em>value</em> of the integral and the second one is the <em>error</em>.</p>
+<p>Consider an integral of the form - <span class="math">\begin{equation}
+I(p, q) = \int_{a}^{b}(px + q) dx
+\end{equation}</span> where <span class="math notranslate nohighlight">\(p=2\)</span> and <span class="math notranslate nohighlight">\(q=1\)</span>. Also the limit of integrations are <span class="math notranslate nohighlight">\(0\)</span> to <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">:</span> <span class="n">p</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">q</span>
+
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">q</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(2.0, 2.220446049250313e-14)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="dblquad---General-purpose-Double-Integration">
+<h4><code class="docutils literal notranslate"><span class="pre">dblquad</span></code> - General purpose Double Integration<a class="headerlink" href="#dblquad---General-purpose-Double-Integration" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.dblquad(func, a, b, gfun, hfun, args=(), ...)
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.dblquad.html#scipy.integrate.dblquad">source</a></p>
+<p>Integrate the <code class="docutils literal notranslate"><span class="pre">func(y,</span> <span class="pre">x)</span></code> from <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">a..b</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">gfun(x)..hfun(x)</span></code></p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: a callable Python function of two variables - <code class="docutils literal notranslate"><span class="pre">y</span></code> the first argument and <code class="docutils literal notranslate"><span class="pre">x</span></code> the second.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>: the limit of integration in <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">a&lt;b</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gfun</span></code>: lower boundary curve in <code class="docutils literal notranslate"><span class="pre">y</span></code> which takes a single argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hfun</span></code>: upper boundary curve in <code class="docutils literal notranslate"><span class="pre">y</span></code> which takes a single argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: extra argument to pass to the <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p></li>
+</ul>
+<p>Returns:</p>
+<ul class="simple">
+<li><p>The value of the integral.</p></li>
+<li><p>error value.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="Example">
+<h3>Example<a class="headerlink" href="#Example" title="Permalink to this headline">¶</a></h3>
+<p>Compute the double integral of <span class="math notranslate nohighlight">\(\phi(x,y)=xy^2\)</span> over the plane of a square where <span class="math notranslate nohighlight">\(x\)</span> extends from 0 to 2 and <span class="math notranslate nohighlight">\(y\)</span> from 0 to 1..</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">dblquad</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">gfunc</span><span class="p">,</span> <span class="n">hfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">dblquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfunc</span><span class="p">,</span> <span class="n">hfunc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.6666666666666667, 7.401486830834377e-15)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Compute the double integral <span class="math">\begin{equation}
+\int_{0}^{1}\int_{0}^{x}(x^2 + y^2) dA
+\end{equation}</span> where <span class="math notranslate nohighlight">\(dA\)</span> indicates small area in <span class="math notranslate nohighlight">\(xy\)</span>-plane.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">dblquad</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">gfunc</span><span class="p">,</span> <span class="n">hfunc</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">dblquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfunc</span><span class="p">,</span> <span class="n">hfunc</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.3333333333333333, 1.4706752548740773e-14)
+</pre></div></div>
+</div>
+<div class="section" id="tplquad---General-purpose-Triple-Integration">
+<h4><code class="docutils literal notranslate"><span class="pre">tplquad</span></code> - General purpose Triple Integration<a class="headerlink" href="#tplquad---General-purpose-Triple-Integration" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.tplquad(func, a, b, gfun, hfun, qfun, rfun, args=(), ...)
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.tplquad.html#scipy.integrate.tplquad">source</a></p>
+<p>Return the triple integral of <code class="docutils literal notranslate"><span class="pre">func(z,</span> <span class="pre">y,</span> <span class="pre">x)</span></code> from <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">a..b</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">gfun(x)..hfun(x)</span></code>, and <code class="docutils literal notranslate"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">qfun(x,y)..rfun(x,y)</span></code>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: a callable Python function of at least three variables in the order (z, y, x).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>, <code class="docutils literal notranslate"><span class="pre">b</span></code>: the limit of integration in <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">a&lt;b</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gfun</span></code>: lower boundary curve in <code class="docutils literal notranslate"><span class="pre">y</span></code> which takes a single argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hfun</span></code>: upper boundary curve in <code class="docutils literal notranslate"><span class="pre">y</span></code> which takes a single argument <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">qfun</span></code>: The lower boundary surface in z. It must be a function that takes two floats in the order (x, y).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rfun</span></code>: The upper boundary surface in z. It must be a function that takes two floats in the order (x, y).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: extra argument to pass to the <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p></li>
+</ul>
+<p>Returns:</p>
+<ul class="simple">
+<li><p>The value of the integral.</p></li>
+<li><p>error value.</p></li>
+</ul>
+</div>
+<div class="section" id="Volume-of-a-unit-sphere">
+<h4>Volume of a unit sphere<a class="headerlink" href="#Volume-of-a-unit-sphere" title="Permalink to this headline">¶</a></h4>
+<p>Let us attempt to find the volume of a unit sphere. We can solve the problem in cartesian coordinate as well as spherical polar coordinate.</p>
+<p>In cartesian coordinate, volume can be expressed interms of triple integral - <span class="math">\begin{equation}
+V = 8\int_{0}^{1}\int_{0}^{\sqrt{1-x^2}}\int_{0}^{\sqrt{1-x^2-y^2}}dzdydx
+\end{equation}</span></p>
+<p>In spherical polar coordinate, it is expressed as - <span class="math">\begin{equation}
+V = \int_{0}^{2\pi}\int_{0}^{\pi}\int_{0}^{1}r^2 \sin \theta drd\theta d\phi
+\end{equation}</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[42]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># In cartesian coordinate</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">tplquad</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">tplquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Volume of the sphere = </span><span class="si">%0.3f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="o">*</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Volume of the sphere = 4.189
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[43]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># In spherical polar coordinate</span>
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">tplquad</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">phi</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="n">r</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">theta</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">theta</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+<span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">theta</span><span class="p">,</span> <span class="n">phi</span><span class="p">:</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span>
+
+<span class="n">result</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">tplquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Volume of the sphere = </span><span class="si">%0.3f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Volume of the sphere = 4.189
+</pre></div></div>
+</div>
+<p>Evaluate <span class="math">\begin{equation}
+\int_{1}^{2}\int_{2}^{3}\int_{0}^{1}xyzdxdydz
+\end{equation}</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[44]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">tplquad</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">3</span>
+<span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">1</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">tplquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(1.8750000000000002, 3.324644794257407e-14)
+</pre></div></div>
+</div>
+<p>Evaluate <span class="math">\begin{equation}
+\int\int\int x^2yz dxdydz
+\end{equation}</span> throughout the volume bounded by the plane <span class="math notranslate nohighlight">\(x=0\)</span>, <span class="math notranslate nohighlight">\(y=0\)</span> and <span class="math notranslate nohighlight">\(z=0\)</span>, <span class="math notranslate nohighlight">\(x+y+z=1\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[45]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">tplquad</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="o">*</span><span class="n">z</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span>
+<span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">tplquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.0003968253968253968, 3.14561023818924e-17)
+</pre></div></div>
+</div>
+<p>Let <span class="math notranslate nohighlight">\(\phi=45x^2y\)</span> and let <span class="math notranslate nohighlight">\(V\)</span> denote the closed region bounded by the planes <span class="math notranslate nohighlight">\(4x + 2y + z= 8\)</span>, <span class="math notranslate nohighlight">\(x=0\)</span>, <span class="math notranslate nohighlight">\(y=0\)</span> and <span class="math notranslate nohighlight">\(z=0\)</span>. Evaluate the integral <span class="math notranslate nohighlight">\(\int\int\int \phi dV\)</span>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[46]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">tplquad</span>
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="mi">45</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">y</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span> <span class="o">-</span> <span class="mi">4</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">2</span><span class="o">*</span><span class="n">y</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">tplquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># answer is not correct</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+2048.0
+</pre></div></div>
+</div>
+<p>Find the volume of the region common to the intersecting cylinders <span class="math notranslate nohighlight">\(x^2 + y^2 = a^2\)</span> and <span class="math notranslate nohighlight">\(x^2 + z^2 = a^2\)</span>.</p>
+<p>Let us take the radius of each cylinder to be equal to 1.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[47]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">tplquad</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="n">func</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+<span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">tplquad</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">gfun</span><span class="p">,</span> <span class="n">hfun</span><span class="p">,</span> <span class="n">qfun</span><span class="p">,</span> <span class="n">rfun</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Required volume =</span><span class="si">%0.3f</span><span class="s2"> &quot;</span><span class="o">%</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Required volume =5.333
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="Gaussian-Quadrature">
+<h2>Gaussian Quadrature<a class="headerlink" href="#Gaussian-Quadrature" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>The first one is <code class="docutils literal notranslate"><span class="pre">fixed_quad</span></code>, which performs fixed-order Gaussian quadrature.</p></li>
+<li><p>The second one is <code class="docutils literal notranslate"><span class="pre">quadrature</span></code>, which performs Gaussian quadrature of multiple orders until the difference in the integral estimate is beneath some tolerance supplied by the user.</p></li>
+</ul>
+<div class="section" id="fixed_quad---Gaussian-quadrature">
+<h3><code class="docutils literal notranslate"><span class="pre">fixed_quad</span></code> - Gaussian quadrature<a class="headerlink" href="#fixed_quad---Gaussian-quadrature" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.fixed_quad(func, a, b, args=(), n=5)
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.fixed_quad.html#scipy.integrate.fixed_quad">source</a></p>
+<p>Compute a definite integral using fixed-order Gaussian quadrature.</p>
+<p>Integrate func from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code> using Gaussian quadrature of order <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: a callable Python function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>, the lower limit of integration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>, the upper limit of integration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: <code class="docutils literal notranslate"><span class="pre">tuple()</span></code>, extra argument to pass to the <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">n</span></code> : <code class="docutils literal notranslate"><span class="pre">int</span></code>, order of quadrature integration, default is 5.</p></li>
+</ul>
+<p>Returns:</p>
+<ul class="simple">
+<li><p>The Gaussian quadrature approximation to the integral.</p></li>
+<li><p>Statically returned value of None.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">fixed_quad</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">8</span>
+<span class="n">fixed_quad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[48]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.1110884353741496, None)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">fixed_quad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[49]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.9999999771971152, None)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">fixed_quad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[50]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.4352098672079321, None)
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="quadrature---Gaussian-quadrature">
+<h3><code class="docutils literal notranslate"><span class="pre">quadrature</span></code> - Gaussian quadrature<a class="headerlink" href="#quadrature---Gaussian-quadrature" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.quadrature(func, a, b, args=(), tol=1.49e-08, ...)
+</pre></div>
+</div>
+<p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.quadrature.html#scipy.integrate.quadrature">source</a></p>
+<p>Compute a definite integral using fixed-tolerance Gaussian quadrature.</p>
+<p>Integrate func from <code class="docutils literal notranslate"><span class="pre">a</span></code> to <code class="docutils literal notranslate"><span class="pre">b</span></code> using Gaussian quadrature with absolute tolerance <code class="docutils literal notranslate"><span class="pre">tol</span></code>.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: a callable Python function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>, the lower limit of integration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code> : <code class="docutils literal notranslate"><span class="pre">float</span></code>, the upper limit of integration.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: <code class="docutils literal notranslate"><span class="pre">tuple()</span></code>, extra argument to pass to the <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tol</span></code>, <code class="docutils literal notranslate"><span class="pre">rtol</span></code>: optional Iteration stops when error between last two iterates is less than <em>tol</em> OR the relative change is less than <em>rtol</em>. Returns:</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code>, Gaussian quadrature approximation (within tolerance) to integral.The Gaussian quadrature approximation to the integral.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">float</span></code>, Difference between last two estimates of the integral.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quadrature</span>
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">8</span>
+<span class="n">quadrature</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[51]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.11111111111111106, 4.163336342344337e-17)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">quadrature</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[52]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.9999999999999536, 3.9611425250996035e-11)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="n">quadrature</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[53]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+(0.4352098758040617, 8.596129585924928e-09)
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Integration-using-sample">
+<h2>Integration using sample<a class="headerlink" href="#Integration-using-sample" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="trapezoid--Trapezoidal-rule">
+<h3><code class="docutils literal notranslate"><span class="pre">trapezoid</span></code>- Trapezoidal rule<a class="headerlink" href="#trapezoid--Trapezoidal-rule" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.trapezoid(y, x=None, dx=1.0, axis=- 1)
+</pre></div>
+</div>
+<p>Integrate along the given axis using the composite trapezoidal rule.</p>
+<p>Parameters:</p>
+<p>Integrate y (x) along given axis.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: array_like</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Input array to integrate.
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: array_like, optional</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The sample points corresponding to the y values. If x is None, the sample points are
+assumed to be evenly spaced dx apart. The default is None.
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dx</span></code>: scalar, optional</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The spacing between sample points when x is None. The default is 1.
+</pre></div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">axis</span></code>: int, optional</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The axis along which to integrate.
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Returns:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">trapz</span></code>: float</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Definite integral as approximated by trapezoidal rule.
+</pre></div>
+</div>
+</li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[54]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+4.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[55]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+8.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">dx</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[56]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+8.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span> <span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[57]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([[0, 1, 2],
+       [3, 4, 5]])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[58]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([1.5, 2.5, 3.5])
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[59]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+array([2., 8.])
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="simpson---Simpson-rule">
+<h3><code class="docutils literal notranslate"><span class="pre">simpson</span></code> - Simpson rule<a class="headerlink" href="#simpson---Simpson-rule" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.simpson(y, x=None, dx=1, axis=- 1, even=&#39;avg&#39;)
+</pre></div>
+</div>
+<p>Integrate y(x) using samples along the given axis and the composite Simpson’s rule. If x is None, spacing of dx is assumed.</p>
+<p>If there are an even number of samples, N, then there are an odd number of intervals (N-1), but Simpson’s rule requires an even number of intervals. The parameter ‘even’ controls how this is handled.</p>
+<p><strong>Parameters</strong></p>
+<ul class="simple">
+<li><p>y: array_like Array to be integrated.</p></li>
+<li><p>x: array_like, optional If given, the points at which y is sampled.</p></li>
+<li><p>dx: int, optional Spacing of integration points along axis of x. Only used when x is None. Default is 1.</p></li>
+<li><p>axis: int, optional Axis along which to integrate. Default is the last axis.</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[60]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+40.5
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[61]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1642.5
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[62]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1640.25
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">integrate</span><span class="o">.</span><span class="n">simpson</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">even</span><span class="o">=</span><span class="s1">&#39;first&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[63]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+1644.5
+</pre></div></div>
+</div>
+</div>
+</div>
+<div class="section" id="Solving-Ordinary-Differential-Equation">
+<h2>Solving Ordinary Differential Equation<a class="headerlink" href="#Solving-Ordinary-Differential-Equation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scipy.integrate.odeint">
+<h3>scipy.integrate.odeint<a class="headerlink" href="#scipy.integrate.odeint" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.odeint(func, y0, t, args=(), ...)
+</pre></div>
+</div>
+<p>Integrate a system of ordinary differential equations.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Parameters</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: <strong>callable(y, t)</strong></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">y0</span></code>: <strong>array</strong> - Initial condition on y (can be a vector).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: <strong>array</strong> - A sequence of time points for which to solve for y.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: <strong>tuple, optional</strong> - Extra arguments to pass to function.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Returns</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: <strong>array</strong>, <code class="docutils literal notranslate"><span class="pre">shape</span> <span class="pre">(len(t),</span> <span class="pre">len(y0))</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>Array containing the value of <code class="docutils literal notranslate"><span class="pre">y</span></code> for each desired time in <code class="docutils literal notranslate"><span class="pre">t</span></code>, with the initial value <code class="docutils literal notranslate"><span class="pre">y0</span></code> in the first row.</p>
+<div class="section" id="Example---Oscillation-of-a-pendulum">
+<h4>Example - Oscillation of a pendulum<a class="headerlink" href="#Example---Oscillation-of-a-pendulum" title="Permalink to this headline">¶</a></h4>
+<p>The differential equation representing the motion of a simple pendulum under action of gravity and inpresence of air resistance is given by <span class="math">\begin{equation}
+\frac{d^2\theta}{dt^2} + b\frac{d\theta}{dt} + c\theta = 0
+\end{equation}</span> where <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> are arbitrary constants.</p>
+<p>Since, <code class="docutils literal notranslate"><span class="pre">odeint</span></code> solver can solve first order differntial equation, we have to break the given equation into two first order equations -</p>
+<p><span class="math">\begin{align}
+&\frac{d\theta}{dt} = \omega \\
+&\frac{d\omega}{dt} = - b\omega - c\theta
+\end{align}</span></p>
+<p>To solve these coupled differential equations, we can consider a vector <span class="math notranslate nohighlight">\(y\)</span> which holds two variables <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\omega\)</span>, i.e.</p>
+<div class="math notranslate nohighlight">
+\[y = [\theta, \omega]\]</div>
+<p>So, we can make a model which is essential for estimating slope at different points in the time <span class="math notranslate nohighlight">\(t\)</span> domain for solving the differential equations.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[64]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">model</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+    <span class="n">theta</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="n">dtheta_dt</span> <span class="o">=</span> <span class="n">omega</span>
+    <span class="n">domega_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">b</span><span class="o">*</span><span class="n">omega</span> <span class="o">-</span> <span class="n">c</span><span class="o">*</span><span class="n">theta</span>
+    <span class="n">dy_dt</span>     <span class="o">=</span> <span class="p">[</span><span class="n">dtheta_dt</span><span class="p">,</span> <span class="n">domega_dt</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dy_dt</span>
+</pre></div>
+</div>
+</div>
+<p>Let us now set the initial conditions of the system. Consider, the pendulum is nearly at vertical position and the pendulum makes a very small angle, say <span class="math notranslate nohighlight">\(1^\circ\)</span> with vertical and initial velocity be 0. So, we can write the initial condition as</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[65]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">y0</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>Let us discretize the time domain into 100 points and calculate <span class="math notranslate nohighlight">\(y\)</span> values at each point.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[66]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>We have to pass the values of the constants <span class="math notranslate nohighlight">\(b\)</span> and <span class="math notranslate nohighlight">\(c\)</span> to the <code class="docutils literal notranslate"><span class="pre">odeint</span></code> function through <code class="docutils literal notranslate"><span class="pre">args=((b,</span> <span class="pre">c),)</span></code>. Let us take <span class="math notranslate nohighlight">\(b = 0.25, ~ c=5.0\)</span> and assign the values to the variables.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[67]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="mf">0.25</span><span class="p">,</span> <span class="mf">5.0</span>
+
+<span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">odeint</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">odeint</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">))</span>
+<span class="n">theta</span><span class="p">,</span> <span class="n">omega</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<p>The solution is an array with shape (101, 2). The first column is <span class="math notranslate nohighlight">\(\theta(t)\)</span>, and the second is <span class="math notranslate nohighlight">\(\omega(t)\)</span>. The following code plots both components.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[68]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">theta(t)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">omega</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;:&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;$\omega(t)$&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$</span><span class="se">\\</span><span class="s2">theta(t) / </span><span class="se">\\</span><span class="s2">omega(t)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/ScipyBasic_59_0.png" src="_images/ScipyBasic_59_0.png" />
+</div>
+</div>
+</div>
+<div class="section" id="scipy.integrate.solve_ivp">
+<h4>scipy.integrate.solve_ivp<a class="headerlink" href="#scipy.integrate.solve_ivp" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>scipy.integrate.solve_ivp(fun, t_span, y0, t_eval=None, args = none, ...)
+</pre></div>
+</div>
+<p>Solve an initial value problem for a system of ODEs.</p>
+<p>The function numerically integrates an ordinary differential equation with a given initial value.</p>
+<p><span class="math">\begin{equation}
+\frac{dy}{dt} = f(t, y)\\
+y(t_0) = y_0
+\end{equation}</span></p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Parameters</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">func</span></code>: <strong>callable(y, t)</strong> - The calling signature is <code class="docutils literal notranslate"><span class="pre">fun(t,</span> <span class="pre">y)</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_span</span></code>: <strong>2-tuple of floats</strong> - Interval of integration (t0, tf). The solver starts with t=t0 and integrates until it reaches t=tf.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">y0</span></code>: <strong>array_like, shape (n,)</strong> - Initial state.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_eval</span></code>: <strong>array_like or None, optional</strong> - Times at which to store the computed solution, must be sorted and lie within t_span. If None (default), use points selected by the solver.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">args</span></code>: <strong>tuple, optional</strong> -</p></td>
+</tr>
+<tr class="row-odd"><td><p>Additional arguments to pass to the user-defined functions. If given, the additional arguments are passed to all user-defined functions. So if, for example, fun has the signature fun(t, y, a, b, c),</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>Returns</strong></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">t</span></code>: <strong>ndarray, shape (n_points,)</strong> - Time points.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: <strong>ndarray, shape (n, n_points)</strong> - Values of the solution at t.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sol</span></code>: <strong>OdeSolution or None</strong> - Found solution as OdeSolution instance; None if dense_output was set to False.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">t_events</span></code>: <strong>list of ndarray or None</strong> - Contains for each event type a list of arrays at which an event of that type event was detected. None if events was None.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">y_events</span></code>: <strong>list of ndarray or None</strong> - For each value of t_events, the corresponding value of the solution. None if events was None.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="Example---Radioactive-Decay">
+<h4>Example - Radioactive Decay<a class="headerlink" href="#Example---Radioactive-Decay" title="Permalink to this headline">¶</a></h4>
+<p>Radioactivity is the phenomenon where an atomic nucleus spontaneously decay to other nucleus without the aid of any external agent and the process continues until it reaches a stable atomic configuration.</p>
+<p>The rate of decay of a radioactive nucleus at any instant is proportional to the number of nuclei present in the sample at that time, i.e.</p>
+<p><span class="math">\begin{equation}
+\frac{dN(t)}{dt} = \lambda t
+\end{equation}</span></p>
+<p>where <span class="math notranslate nohighlight">\(N(t)\)</span> represents the number of radioactive nucleus at time <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(\lambda\)</span> is the decay constant, which is related to the half-life (i.e. the time during which half of the sample is decayed) of the sample.</p>
+<p>If <span class="math notranslate nohighlight">\(N(t_0) = N_0\)</span> represents the initial number of radioactive nucleus present in the sample, then, we can treat it as an initial value problem and solve with the help of <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> solver from SciPy .</p>
+<p>So, first of all let us frame our decay model, which should be</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[69]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">model_decay</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">N</span><span class="p">):</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">lamda</span><span class="o">*</span><span class="n">N</span>
+</pre></div>
+</div>
+</div>
+<p>The initial condition is that at the begining i.e. when start studying the system, the numebr of nuclei at the sample be 10000. So, we can write <span class="math notranslate nohighlight">\(N(0) = 10000\)</span>.</p>
+<p>Let us discretize our time domain into 1000 points and start calculating the value of <span class="math notranslate nohighlight">\(N\)</span> at each time point. This can be done in this way.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[70]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">t_init</span><span class="p">,</span> <span class="n">t_final</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">t_init</span><span class="p">,</span> <span class="n">t_final</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">N0</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10000</span><span class="p">]</span>
+<span class="n">lamda</span> <span class="o">=</span> <span class="mf">0.005</span>
+</pre></div>
+</div>
+</div>
+<p>Now, we arrange the problem definitions according to our <code class="docutils literal notranslate"><span class="pre">solve_ivp</span></code> solver.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[71]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">func</span> <span class="o">=</span> <span class="n">model_decay</span>
+<span class="n">t_span</span> <span class="o">=</span> <span class="p">[</span><span class="n">t_init</span><span class="p">,</span> <span class="n">t_final</span><span class="p">]</span>
+<span class="n">y0</span> <span class="o">=</span> <span class="n">N0</span>
+<span class="n">t_eval</span> <span class="o">=</span> <span class="n">t</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[72]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">solve_ivp</span>
+
+<span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span><span class="n">model_decay</span><span class="p">,</span> <span class="n">t_span</span><span class="o">=</span><span class="p">[</span><span class="n">t_init</span><span class="p">,</span> <span class="n">t_final</span><span class="p">],</span> <span class="n">y0</span><span class="o">=</span><span class="n">N0</span><span class="p">,</span> <span class="n">t_eval</span> <span class="o">=</span> <span class="n">t</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">t</span>
+<span class="n">N</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<p>The solution can be represented graphivally with the following code.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[73]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">analytical_model</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">N0</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lamda</span><span class="o">*</span><span class="n">t</span><span class="p">)</span>
+
+<span class="n">N_analytical</span> <span class="o">=</span> <span class="n">analytical_model</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[74]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="s1">&#39;b-&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;analytical approach&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="s1">&#39;ro&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Numerical approach&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;$t$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;$N(t)$&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/ScipyBasic_70_0.png" src="_images/ScipyBasic_70_0.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="SympyBasic.html" class="btn btn-neutral float-left" title="An Overview of SymPy" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Dr. Subir Sarkar.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
