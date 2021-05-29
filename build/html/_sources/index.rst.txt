@@ -9,6 +9,11 @@ Welcome to Python Tutorial's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   
+   PythonBasic
+   NumPyBasic
+   SympyBasic
+   ScipyBasic
 
 
 
